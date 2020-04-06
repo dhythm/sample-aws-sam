@@ -5,9 +5,27 @@ const lambdaHandler = (
   context: Context,
   callback: Callback,
 ) => {
+  // const client = new DynamoDB.DocumentClient({
+  //   endpoint: 'http://dynamodb:8000',
+  //   region: 'ap-north-east1',
+  // });
+
+  // client.scan(
+  //   {
+  //     TableName: process.env.TABLE_NAME,
+  //   },
+  //   (err, data) => {
+  //     if (err) {
+  //       console.log({ err });
+  //       return;
+  //     }
+  //     console.log({ data });
+  //   },
+  // );
+
   const result = {
     status: 200,
-    message: 'Hello Second',
+    message: `Hello ${process.env.TABLE_NAME}`,
   };
 
   callback(null, {

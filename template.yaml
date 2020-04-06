@@ -9,6 +9,9 @@ Description: >
 Globals:
   Function:
     Timeout: 3
+    Environment:
+      Variables:
+        TABLE_NAME: hello-dynamo-table
 
 Resources:
   HelloTypescriptFunction:

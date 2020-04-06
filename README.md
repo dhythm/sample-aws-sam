@@ -41,5 +41,10 @@ npm run build
 To build and deploy your application for the first time, run the following in your shell:
 ```bash
 sam build
+
+# Running on local
+sam local start-api
+sam local invoke "FUNCTION_IDENTIFER"
+# Deploy to AWS
 sam deploy --guided
 ```

@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   sample-aws-sam
@@ -42,11 +42,15 @@ Outputs:
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloTypescriptApi:
-    Description: 'API Gateway endpoint URL for Prod stage for Hello Typescript function'
-    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/'
+    Description: "API Gateway endpoint URL for Prod stage for Hello Typescript function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
   HelloTypescriptFunction:
-    Description: 'Hello Typescript Lambda Function ARN'
+    Description: "Hello Typescript Lambda Function ARN"
     Value: !GetAtt HelloTypescriptFunction.Arn
   HelloTypescriptFunctionIamRole:
-    Description: 'Implicit IAM Role created for Hello Typescript function'
+    Description: "Implicit IAM Role created for Hello Typescript function"
     Value: !GetAtt HelloTypescriptFunctionRole.Arn
+    # It can be used in a different yaml by the following description
+    # Role: !ImportValue HelloTypescriptFunctionIamRole
+    Export:
+      Name: HelloTypescriptFunctionIamRole

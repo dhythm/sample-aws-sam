@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=development webpack && find dist/* -name \"*\" -type d -exec cp package.json {} \\;",
     "watch": "NODE_ENV=development webpack --watch"
   },
   "repository": {},
@@ -15,8 +16,12 @@
     "@types/glob": "^7.1.1",
     "@types/node": "^13.11.0",
     "@types/webpack": "^4.41.10",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
     "awesome-typescript-loader": "^5.2.1",
     "aws-sdk": "^2.653.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "glob": "^7.1.6",
     "prettier": "^2.0.3",
     "ts-node": "^8.8.2",

@@ -4,7 +4,7 @@ import * as Webpack from 'webpack';
 
 const SRC_PATH = resolve(__dirname, './src/functions/');
 const ENTRY_NAME = 'app.ts';
-const BUILT_PATH = resolve(__dirname, './build');
+const BUILT_PATH = resolve(__dirname, './dist');
 const BUILD_VARIANT = process.env.NODE_ENV;
 
 const resolveEntry = (): Webpack.Entry => {

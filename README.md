@@ -2,7 +2,6 @@ Follows with https://qiita.com/navitime_tech/items/70432345d930c2bc1a14
 ```bash
 npm i -D webpack webpack-cli typescript ts-node awesome-typescript-loader aws-sdk glob
 npm i -D @types/node @types/webpack @types/aws-lambda @types/glob
-npm i -D prettier
 
 touch webpack.config.ts
 
@@ -14,13 +13,14 @@ cat <<EOF > tsconfig.json
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "outDir": "./build",
+    "outDir": "./dist",
     "allowJs": true
   },
   "include": ["./src/**/*"]
 }
 EOF
 
+npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser prettier eslint-config-prettier eslint-plugin-prettier
 cat <<EOF > .prettierrc
 {
   "semi": true,

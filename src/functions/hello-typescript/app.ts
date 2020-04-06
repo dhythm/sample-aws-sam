@@ -7,7 +7,7 @@ const lambdaHandler = (
 ) => {
   const result = {
     status: 200,
-    message: 'OK!!!!!',
+    message: 'Hello TypeScript',
   };
 
   callback(null, {

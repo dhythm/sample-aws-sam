@@ -127,5 +127,6 @@ $RECYCLE.BIN/
 
 .aws-sam/
 dist/
+samconfig.toml
 
 # End of https://www.gitignore.io/api/osx,node,linux,windows

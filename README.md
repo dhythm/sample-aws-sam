@@ -34,6 +34,8 @@ EOF
 To transpile TS file to JS file.
 ```bash
 npm run watch
+# OR
+npm run build
 ```
 
 To build and deploy your application for the first time, run the following in your shell:

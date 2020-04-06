@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   sample-aws-sam
@@ -23,32 +23,57 @@ Resources:
           Properties:
             Path: /hello
             Method: get
-  HelloSecondFunction:
+  HelloDynamoDbFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: dist/hello-second/
+      CodeUri: dist/hello-dynamodb/
       Handler: app.lambdaHandler
       Role: !GetAtt HelloTypescriptFunctionRole.Arn
       Runtime: nodejs12.x
       Events:
-        HelloSecond:
+        HelloDynamoDb:
           Type: Api
           Properties:
-            Path: /second
+            Path: /dynamodb
             Method: get
+  # # Create a DynamoDB table with a single attribute primary key
+  # HelloDynamoDbTable:
+  #   Type: AWS::Serverless::SimpleTable
+  #   Properties:
+  #     PrimaryKey:
+  #       Name: id
+  #       Type: String
+  #     TableName: hello-dynamo-table
+  HelloDynamoDbTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: hello-dynamo-table
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        - AttributeName: name
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloTypescriptApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello Typescript function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    Description: 'API Gateway endpoint URL for Prod stage for Hello Typescript function'
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/'
   HelloTypescriptFunction:
-    Description: "Hello Typescript Lambda Function ARN"
+    Description: 'Hello Typescript Lambda Function ARN'
     Value: !GetAtt HelloTypescriptFunction.Arn
   HelloTypescriptFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello Typescript function"
+    Description: 'Implicit IAM Role created for Hello Typescript function'
     Value: !GetAtt HelloTypescriptFunctionRole.Arn
     # It can be used in a different yaml by the following description
     # Role: !ImportValue HelloTypescriptFunctionIamRole

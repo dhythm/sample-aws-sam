@@ -23,6 +23,19 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+  HelloSecondFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: dist/hello-second/
+      Handler: app.lambdaHandler
+      Role: !GetAtt HelloTypescriptFunctionRole.Arn
+      Runtime: nodejs12.x
+      Events:
+        HelloSecond:
+          Type: Api
+          Properties:
+            Path: /second
+            Method: get
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

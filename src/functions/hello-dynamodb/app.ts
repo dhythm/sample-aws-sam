@@ -8,7 +8,8 @@ const lambdaHandler = async (
 ) => {
   // The endpoint should use `the container name of dynamodb-local`.
   const client = new DynamoDB.DocumentClient({
-    endpoint: 'http://dynamodb:8000',
+    endpoint:
+      process.env.AWS_SAM_LOCAL === 'true' ? 'http://dynamodb:8000' : '',
     region: 'ap-north-east1',
   });
 

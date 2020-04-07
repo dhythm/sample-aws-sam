@@ -4,9 +4,10 @@
   "description": "This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=development webpack && find dist/* -name \"*\" -type d -exec cp package.json {} \\; && sam build",
-    "watch": "NODE_ENV=development webpack --watch"
+    "build": "npm run webpack && sam build",
+    "build:all": "npm run webpack && find dist/* -name \"*\" -type d -exec cp package.json {} \\; && sam build",
+    "webpack": "NODE_ENV=development webpack",
+    "watch": "npm run webpack --watch"
   },
   "repository": {},
   "author": "dhythm",

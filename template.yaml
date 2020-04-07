@@ -31,7 +31,8 @@ Resources:
     Properties:
       CodeUri: dist/hello-dynamodb/
       Handler: app.lambdaHandler
-      Role: !GetAtt HelloTypescriptFunctionRole.Arn
+      # Role: !GetAtt HelloTypescriptFunctionRole.Arn
+      Role: !GetAtt AWSLambdaDynamoDBExecutionRole.Arn
       Runtime: nodejs12.x
       Events:
         HelloDynamoDb:
@@ -39,14 +40,6 @@ Resources:
           Properties:
             Path: /dynamodb
             Method: get
-  # # Create a DynamoDB table with a single attribute primary key
-  # HelloDynamoDbTable:
-  #   Type: AWS::Serverless::SimpleTable
-  #   Properties:
-  #     PrimaryKey:
-  #       Name: id
-  #       Type: String
-  #     TableName: hello-dynamo-table
   HelloDynamoDbTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -64,6 +57,27 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
+  # # Create a DynamoDB table with a single attribute primary key
+  # HelloDynamoDbTable:
+  #   Type: AWS::Serverless::SimpleTable
+  #   Properties:
+  #     PrimaryKey:
+  #       Name: id
+  #       Type: String
+  #     TableName: hello-dynamo-table
+  AWSLambdaDynamoDBExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

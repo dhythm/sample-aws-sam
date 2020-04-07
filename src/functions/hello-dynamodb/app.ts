@@ -8,11 +8,25 @@ const lambdaHandler = async (
 ) => {
   // The endpoint should use `the container name of dynamodb-local`.
   const client = new DynamoDB.DocumentClient({
-    endpoint:
-      process.env.AWS_SAM_LOCAL === 'true' ? 'http://dynamodb:8000' : '',
+    apiVersion: '2012-08-10',
     region: process.env.AWS_REGION,
+    ...(process.env.AWS_SAM_LOCAL === 'true' && {
+      endpoint: 'http://dynamodb:8000',
+    }),
   });
 
+  //
+  // callback(null, {
+  //   statusCode: 200,
+  //   headers: {
+  //     'Content-Type': 'application/json;charset=UTF-8',
+  //   },
+  //   body: JSON.stringify({
+  //     status: 200,
+  //     message: `Hello ${process.env.TABLE_NAME}`,
+  //   }),
+  // });
+  // return;
   try {
     const data = await client
       .scan({
@@ -35,7 +49,6 @@ const lambdaHandler = async (
     });
   } catch (err) {
     console.log(err);
-    return;
   }
 };
 

@@ -55,6 +55,8 @@ docker run --network lambda-local --name dynamodb -d -p 8000:8000 amazon/dynamod
 
 docker ps --no-trunc
 docker stop [CONTAINER_ID]
+# OR
+docker stop [CONTAINER_NAME]
 ```
 
 To create a dynamodb table.

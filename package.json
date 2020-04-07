@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=development webpack && find dist/* -name \"*\" -type d -exec cp package.json {} \\;",
+    "build": "NODE_ENV=development webpack && find dist/* -name \"*\" -type d -exec cp package.json {} \\; && sam build",
     "watch": "NODE_ENV=development webpack --watch"
   },
   "repository": {},

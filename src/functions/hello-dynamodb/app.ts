@@ -6,40 +6,36 @@ const lambdaHandler = async (
   context: Context,
   callback: Callback,
 ) => {
+  // The endpoint should use `the container name of dynamodb-local`.
   const client = new DynamoDB.DocumentClient({
-    endpoint: 'http://localhost:8000',
+    endpoint: 'http://dynamodb:8000',
     region: 'ap-north-east1',
   });
 
-  const data = await client
-    .scan(
-      {
+  try {
+    const data = await client
+      .scan({
         TableName: process.env.TABLE_NAME,
+      })
+      .promise();
+
+    const result = {
+      status: 200,
+      message: `Hello ${process.env.TABLE_NAME}`,
+      data,
+    };
+
+    callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
       },
-      // (err, data) => {
-      //   if (err) {
-      //     console.log({ err });
-      //     return;
-      //   }
-      //   console.log({ data });
-      // },
-    )
-    .promise();
-  console.log({ data });
-
-  const result = {
-    status: 200,
-    message: `Hello ${process.env.TABLE_NAME}`,
-    hoge: data,
-  };
-
-  callback(null, {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-    body: JSON.stringify(result),
-  });
+      body: JSON.stringify(result),
+    });
+  } catch (err) {
+    console.log(err);
+    return;
+  }
 };
 
 export { lambdaHandler };

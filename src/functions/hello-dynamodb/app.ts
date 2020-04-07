@@ -10,7 +10,7 @@ const lambdaHandler = async (
   const client = new DynamoDB.DocumentClient({
     endpoint:
       process.env.AWS_SAM_LOCAL === 'true' ? 'http://dynamodb:8000' : '',
-    region: 'ap-north-east1',
+    region: process.env.AWS_REGION,
   });
 
   try {

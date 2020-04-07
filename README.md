@@ -41,10 +41,44 @@ npm run build
 To build and deploy your application for the first time, run the following in your shell:
 ```bash
 sam build
-
-# Running on local
-sam local start-api
-sam local invoke "FUNCTION_IDENTIFER"
-# Deploy to AWS
 sam deploy --guided
+```
+
+To set up the environment to run on local.
+```bash
+docker pull amazon/dynamodb-local
+docker images
+docker network create lambda-local
+
+# Need to run First time, can run `docker start dynamodb` from next time.
+docker run --network lambda-local --name dynamodb -d -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb
+
+docker ps --no-trunc
+docker stop [CONTAINER_ID]
+```
+
+To create a dynamodb table.
+```bash
+aws dynamodb create-table --generate-cli-skeleton > dynamodb/table.json
+# `file://` must be included.
+aws dynamodb create-table --cli-input-json file://dynamodb/table.json --endpoint-url http://localhost:8000
+aws dynamodb list-tables --endpoint-url http://localhost:8000
+```
+
+To use GUI for dynamodb-local.
+```bash
+npm install dynamodb-admin -g
+export DYNAMO_ENDPOINT=http://localhost:8000
+dynamodb-admin
+```
+
+To run on local
+```bash
+sam local start-api
+# OR
+sam local start-api --docker-network lambda-local
+
+sam local invoke "FUNCTION_IDENTIFER"
+# OR
+sam local invoke --docker-network lambda-local "FUNCTION_IDENTIFER"
 ```

@@ -65,6 +65,8 @@ aws dynamodb create-table --generate-cli-skeleton > dynamodb/table.json
 # `file://` must be included.
 aws dynamodb create-table --cli-input-json file://dynamodb/table.json --endpoint-url http://localhost:8000
 aws dynamodb list-tables --endpoint-url http://localhost:8000
+aws dynamodb put-item --item file://dynamodb/xxxx.json --endpoint-url http://localhost:8000 --table-name [TABLE_NAME]
+aws dynamodb delete-table --endpoint-url http://localhost:8000 --table-name [TABLE_NAME]
 ```
 
 To use GUI for dynamodb-local.
